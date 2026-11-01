@@ -1,5 +1,9 @@
 
+import { useState } from "react";
+
 export default function Hero() {
+  const [imageLoaded, setImageLoaded] = useState(false);
+
   return (
     <section className="hero section" id="home">
       <div className="hero-content">
@@ -55,9 +59,10 @@ export default function Hero() {
             </svg>
           </a>
 
+          {/* Resume Button */}
           <a
             className="btn btn-secondary"
-            href="/resume.pdf"
+            href={`${import.meta.env.BASE_URL}resume.pdf`}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -106,13 +111,12 @@ export default function Hero() {
 
           {/* Email */}
           <a
-          href="https://mail.google.com/mail/?view=cm&fs=1&to=rakshithanu28@gmail.com&su=Portfolio%20Contact"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Email"
-          title="Send me an email"
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=rakshithanu28@gmail.com&su=Portfolio%20Contact"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Email"
+            title="Send me an email"
           >
-        
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -134,11 +138,16 @@ export default function Hero() {
       {/* Profile Image */}
       <div className="hero-visual">
         <div className="portrait-frame">
+
+          {/* Actual Profile Photo */}
           <img
-            src="/profile.jpeg"
+            src={`${import.meta.env.BASE_URL}profile.jpeg`}
             alt="Rakshitha G G - Software Developer"
-            onError={(e) => {
-              e.currentTarget.style.display = "none";
+            className="profile-photo"
+            onLoad={() => setImageLoaded(true)}
+            onError={() => setImageLoaded(false)}
+            style={{
+              display: imageLoaded ? "block" : "none",
             }}
           />
 
@@ -147,9 +156,12 @@ export default function Hero() {
               &lt;developer /&gt;
             </span>
 
-            <span className="placeholder-initials">
-              RG
-            </span>
+            {/* Show RG only if image is unavailable */}
+            {!imageLoaded && (
+              <span className="placeholder-initials">
+                RG
+              </span>
+            )}
 
             <span className="placeholder-caption">
               Computer Science Graduate
